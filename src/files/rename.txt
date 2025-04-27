@@ -1,0 +1,7 @@
+WIFI facility is now available in the Canteen & Library.
+It will appear as "FOT_WiFi".
+
+You will require to login to access the WIFI facility.
+
+Username :  Use your Microsoft365 Account Username as the username without the domain name
+
