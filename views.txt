@@ -1,0 +1,159 @@
+CREATE OR REPLACE VIEW final_exam_marks_view AS
+SELECT
+    stuId,
+    courseCode,
+    ROUND(
+        CASE 
+            
+            WHEN courseCode IN ('ict2113','ict2122') THEN 
+                -- Calculate sum of all quizzes minus the lowest one (effectively top 2)
+                (COALESCE(quiz1, 0) + COALESCE(quiz2, 0) + COALESCE(quiz3, 0) - 
+                LEAST(
+                    COALESCE(quiz1, 0), 
+                    COALESCE(quiz2, 0), 
+                    COALESCE(quiz3, 0)
+                )) * 0.05 +
+                COALESCE(mid, 0) * 0.20 +
+                COALESCE(end_theory, 0) * 0.40 +
+                COALESCE(end_practical, 0) * 0.30
+
+          
+            
+            WHEN courseCode IN ('ICT2133') THEN 
+                (COALESCE(quiz1, 0) + COALESCE(quiz2, 0) + COALESCE(quiz3, 0) - 
+                LEAST(
+                    COALESCE(quiz1, 0), 
+                    COALESCE(quiz2, 0), 
+                    COALESCE(quiz3, 0)
+                )) * 0.05 +
+                COALESCE(assessment, 0) * 0.20 +
+                COALESCE(end_theory, 0) * 0.40 +
+                COALESCE(end_practical, 0) * 0.30
+            
+            WHEN courseCode IN ('ICT2142') THEN 
+                COALESCE(assessment, 0) * 0.20 +
+                COALESCE(mid, 0) * 0.20 +
+                COALESCE(end_practical, 0) * 0.60
+
+            WHEN courseCode = 'ICT2152' THEN 
+                (COALESCE(quiz1, 0) + COALESCE(quiz2, 0) + COALESCE(quiz3, 0) - 
+                LEAST(
+                    COALESCE(quiz1, 0), 
+                    COALESCE(quiz2, 0), 
+                    COALESCE(quiz3, 0)
+                )) * 0.05 +
+                COALESCE(assessment, 0) * 0.20 +
+                COALESCE(end_theory, 0) * 0.70
+          
+            ELSE 0
+        END,
+        2
+    ) AS final_mark
+FROM
+    marks;
+
+CREATE OR REPLACE VIEW exam_grades_view AS
+SELECT 
+    stuId,
+    courseCode,
+    final_mark,
+    CASE
+        WHEN final_mark <= 100 AND final_mark >= 85 THEN 'A+'
+                WHEN final_mark < 85 AND final_mark >= 75 THEN 'A'
+                WHEN final_mark < 75 AND final_mark >= 70 THEN 'A-'
+                WHEN final_mark < 70 AND final_mark >= 65 THEN 'B+'
+                WHEN final_mark < 65 AND final_mark >= 60 THEN 'B'
+                WHEN final_mark < 60 AND final_mark >= 55 THEN 'B-'
+                WHEN final_mark < 55 AND final_mark >= 50 THEN 'C+'
+                WHEN final_mark < 50 AND final_mark >= 45 THEN 'C'
+                WHEN final_mark < 45 AND final_mark >= 40 THEN 'C-'
+                WHEN final_mark < 40 AND final_mark >= 35 THEN 'D+'
+                WHEN final_mark < 35 AND final_mark >= 30 THEN 'D'
+                ELSE 'E'
+    END AS grade
+FROM 
+    final_exam_marks_view;
+	
+	
+	
+CREATE VIEW grade_point_view AS
+SELECT
+    final_exam_marks_view.stuId,
+    final_exam_marks_view.courseCode,
+    final_exam_marks_view.final_mark,
+    IF(final_exam_marks_view.final_mark >= 90, 4.0,
+    IF(final_exam_marks_view.final_mark >= 84, 4.0,
+    IF(final_exam_marks_view.final_mark >= 75, 3.7,
+    IF(final_exam_marks_view.final_mark >= 70, 3.3,
+    IF(final_exam_marks_view.final_mark >= 65, 3.0,
+    IF(final_exam_marks_view.final_mark >= 60, 2.7,
+    IF(final_exam_marks_view.final_mark >= 55, 2.3,
+    IF(final_exam_marks_view.final_mark >= 50, 2.0,
+    IF(final_exam_marks_view.final_mark >= 45, 1.7,
+    IF(final_exam_marks_view.final_mark >= 40, 1.3,
+    IF(final_exam_marks_view.final_mark >= 35, 1.0, 0.0)
+    )))))))))) AS Grade_point
+FROM
+    final_exam_marks_view;	
+
+CREATE VIEW SGPA_view AS
+SELECT 
+    grade_point_view.stuId,
+    ROUND((SUM(grade_point_view.Grade_point * course.credit) / SUM(course.credit)), 2) AS SGPA
+FROM 
+    grade_point_view
+JOIN 
+    course ON grade_point_view.courseCode = course.course_code
+GROUP BY 
+    grade_point_view.stuId;
+
+select * from SGPA_view;
+
+
+CREATE VIEW CGPA_view AS
+SELECT 
+    grade_point_view.stuId,
+    ROUND((SUM(grade_point_view.Grade_point * course.credit) / SUM(course.credit)), 2) AS CGPA
+FROM 
+    grade_point_view
+JOIN 
+    course ON grade_point_view.courseCode = course.course_code
+WHERE 
+    course.course_code != 'ENG2112'  
+GROUP BY 
+    grade_point_view.stuId;
+
+CREATE VIEW gradesOfUgs AS
+SELECT 
+    eg.stuId,
+    eg.courseCode,
+    c.title,
+    eg.grade,
+    sg.SGPA,
+    cg.CGPA
+FROM exam_grades_view eg
+JOIN course c ON eg.courseCode = c.course_code
+LEFT JOIN SGPA_view sg ON eg.stuId = sg.stuId
+LEFT JOIN CGPA_view cg ON eg.stuId = cg.stuId;
+
+
+create table time_table
+(
+ttId varchar(5) primary key,
+department varchar(3),
+lecId char(6),
+courseCode char(7),
+adminId char(6),
+day varchar(10),
+startTime time,
+endTime time,
+sessionType ENUM('theory','practical')
+);
+
+INSERT INTO time_table (ttId, department, lecId, courseCode, adminId, day, startTime, endTime, sessionType)
+VALUES
+('TT001', 'ICT', 'LEC002', 'ICT2113', 'ADMIN01', 'Monday', '08:00:00', '10:00:00', 'theory'),
+('TT002', 'ICT', 'LEC001', 'ICT2122', 'ADMIN02', 'Tuesday', '10:00:00', '12:00:00', 'theory'),
+('TT003', 'ICT', 'LEC005', 'ICT2133', 'ADMIN03', 'Wednesday', '13:00:00', '15:00:00', 'both'),
+('TT004', 'ICT', 'LEC003', 'ICT2142', 'ADMIN04', 'Thursday', '08:00:00', '10:00:00', 'practical'),
+('TT005', 'ICT', 'LEC004', 'ICT2152', 'ADMIN05', 'Friday', '09:00:00', '11:00:00', 'theory');
