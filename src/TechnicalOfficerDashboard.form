@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="TechnicalOfficerDashboard">
+  <grid id="27dc6" binding="TODashboard" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="5" left="5" bottom="5" right="5"/>
+    <constraints>
+      <xy x="20" y="20" width="924" height="639"/>
+    </constraints>
+    <properties>
+      <background color="-14600875"/>
+      <enabled value="true"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="74775" binding="ContentPanel" layout-manager="CardLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="650" height="530"/>
+            <preferred-size width="650" height="530"/>
+            <maximum-size width="650" height="530"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-659481"/>
+        </properties>
+        <border type="none"/>
+        <children/>
+      </grid>
+      <grid id="c502c" binding="NavigationalPanel" layout-manager="GridLayoutManager" row-count="8" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="5" left="5" bottom="5" right="5"/>
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="250" height="512"/>
+            <preferred-size width="250" height="512"/>
+            <maximum-size width="250" height="512"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-2571082"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="e9eb9" class="javax.swing.JButton" binding="updateProfileBtn">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="180" height="-1"/>
+                <preferred-size width="180" height="-1"/>
+                <maximum-size width="180" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-12691335"/>
+              <font name="Arial" size="14" style="1"/>
+              <foreground color="-1315861"/>
+              <text value="Update Profile"/>
+            </properties>
+          </component>
+          <component id="1ecdc" class="javax.swing.JButton" binding="manageAttendanceBtn">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="180" height="-1"/>
+                <preferred-size width="180" height="-1"/>
+                <maximum-size width="180" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-12691335"/>
+              <font name="Arial" size="14" style="1"/>
+              <foreground color="-1315861"/>
+              <text value="Manage Attendance"/>
+            </properties>
+          </component>
+          <component id="96cad" class="javax.swing.JButton" binding="manageMedicalsButton" default-binding="true">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="180" height="-1"/>
+                <preferred-size width="180" height="-1"/>
+                <maximum-size width="180" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-12691335"/>
+              <font name="Arial" size="14" style="1"/>
+              <foreground color="-1315861"/>
+              <text value="Manage Medicals"/>
+            </properties>
+          </component>
+          <component id="9d49a" class="javax.swing.JButton" binding="viewTimetablesBtn">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="180" height="-1"/>
+                <preferred-size width="180" height="-1"/>
+                <maximum-size width="180" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-12691335"/>
+              <font name="Arial" size="14" style="1"/>
+              <foreground color="-1315861"/>
+              <text value="View Timetables"/>
+            </properties>
+          </component>
+          <component id="8cf7b" class="javax.swing.JButton" binding="viewNoticesBtn">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="180" height="-1"/>
+                <preferred-size width="180" height="-1"/>
+                <maximum-size width="180" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-12691335"/>
+              <font name="Arial" size="14" style="1"/>
+              <foreground color="-1315861"/>
+              <text value="View Notices"/>
+            </properties>
+          </component>
+          <component id="d63cb" class="javax.swing.JButton" binding="logOutBtn">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <minimum-size width="180" height="-1"/>
+                <preferred-size width="180" height="-1"/>
+                <maximum-size width="180" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-12691335"/>
+              <font name="Arial" size="14" style="1"/>
+              <foreground color="-1315861"/>
+              <text value="Log out"/>
+            </properties>
+          </component>
+          <vspacer id="5eed1">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <component id="bfbfd" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <icon value="images/tech.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="72d9b" class="javax.swing.JLabel" binding="header">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <minimum-size width="250" height="18"/>
+            <preferred-size width="250" height="18"/>
+            <maximum-size width="250" height="18"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Arial Black" size="16" style="1"/>
+          <foreground color="-1"/>
+          <text value=""/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
